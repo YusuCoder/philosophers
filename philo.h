@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/14 15:12:11 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:26:37 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@ typedef struct s_ryusupov
 /*--------------Finction definitions------------*/
 int	valid_input(int argc, char** argv);
 int	error_msg(char* msg, int return_value);
+int	ft_atoi(char *str);
+int	is_digit(char *str);
 
 #endif
