@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:34:36 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/15 18:46:57 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:24:50 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,14 @@ void	init_values(t_ryusupov *data, int argc, char **argv)
 	data->end = 0;
 	data->t_time.tv_sec = 0;
 	data->t_time.tv_usec = 0;
+}
+
+void	init_philo(t_ryusupov *philo, t_ryusupov *data, int i)
+{
+	philo->i_philo = i;
+	philo->t_food = data->t_time;
+	philo->food = 0;
+	philo->data = data;
 }
 
 void	init_threads(t_ryusupov *data)
