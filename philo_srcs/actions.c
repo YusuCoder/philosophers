@@ -6,20 +6,20 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:28:09 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/18 19:23:39 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:27:24 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-int calc_time(t_ryusupov *start)
+int calc_time(struct timeval begin)
 {
-	int	result;
-	t_ryusupov *time;
+	int				result;
+	struct timeval	time;
 
 	gettimeofday(&time, NULL);
-	result = (time->now.tv_sec * 1000) + (time->now.tv_usec / 1000);
-	result -= (time->begin.tv_sec * 1000) + (time->begin.tv_usec / 1000);
+	result = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	result -= (begin.tv_sec * 1000) + (begin.tv_usec / 1000);
 	return (result);
 }
 
@@ -28,7 +28,7 @@ void	philo_death(t_ryusupov *philo)
 	pthread_mutex_lock(&philo->data->mutex_death);
 	if (philo->data->end == 0)
 	{
-		if (calc_time(&philo->t_food) > philo->data->death_time)
+		if (calc_time(philo->t_food) > philo->data->death_time)
 		{
 			philo_status(philo, 'd');
 			philo->data->end = 1;
@@ -39,6 +39,24 @@ void	philo_death(t_ryusupov *philo)
 		}
 	}
 	pthread_mutex_unlock(&philo->data->mutex_death);
+}
+
+void	philo_sleep(t_ryusupov *philo, int i)
+{
+	struct timeval	time;
+	struct timeval	now;
+	int				res;
+
+	gettimeofday(&time, NULL);
+	res = calculate_time(time, philo->data->t_time);
+	res += i;
+	gettimeofday(&now, NULL);
+	while (calculate_time(now, philo->data->t_time) < res)
+	{
+		philo_death(philo);
+		usleep(100);
+		gettimeofday(&now, NULL);
+	}
 }
 
 void	philo_eat(t_ryusupov *philo, int *right_fork, int *left_fork, int i)

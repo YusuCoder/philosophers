@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:25:58 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/18 19:32:13 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:30:41 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	philo_status(t_ryusupov *philo, char c)
 {
 	int	i;
 
-	i = calc_time(&philo->data->t_time);
+	i = calc_time(philo->data->t_time);
 	if (philo->data->end == 0)
 	{
 		pthread_mutex_lock(&philo->data->mutex_st);
@@ -37,9 +37,9 @@ void	philo_status(t_ryusupov *philo, char c)
 
 void	sleep_dead(t_ryusupov *philo)
 {
-		is_sleep(philo, philo->data->death_time);
+		philo_sleep(philo, philo->data->death_time);
 		philo_status(philo, 'd');
-		free_philo(philo);
+		free(philo);
 }
 
 void	*routine(void *argv)
@@ -61,7 +61,7 @@ void	*routine(void *argv)
 			if (philo->data->end == 0)
 				think_eat_sleep(philo, philo->i_philo);
 		}
-		free_philo(philo);
+		free(philo);
 	}
 	else
 		sleep_dead(philo);

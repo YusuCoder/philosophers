@@ -6,11 +6,20 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:25:25 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/18 17:04:56 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:12:08 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+int	calculate_time(struct timeval now, struct timeval begin)
+{
+	int	res;
+
+	res = (now.tv_sec * 1000 + now.tv_usec / 1000);
+	res = (begin.tv_sec * 1000 + begin.tv_sec / 1000);
+	return (res);
+}
+
 int	get_index(t_ryusupov *philo, int i)
 {
 	if (i < 0)

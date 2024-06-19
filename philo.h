@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/18 19:20:34 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:29:55 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ void	*routine(void *argv);
 void	philo_death(t_ryusupov *philo);
 void	think_eat_sleep(t_ryusupov *philo, int i);
 void	philo_status(t_ryusupov *philo, char c);
-int 	calc_time(t_ryusupov *start);
+int 	calc_time(struct timeval begin);
+int		calculate_time(struct timeval now, struct timeval begin);
+void	philo_sleep(t_ryusupov *philo, int i);
+void	init_threads(t_ryusupov *data);
 
 #endif
