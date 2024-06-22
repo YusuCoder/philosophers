@@ -3,23 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:28:09 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/19 16:27:24 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/21 22:29:25 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-int calc_time(struct timeval begin)
-{
-	int				result;
-	struct timeval	time;
+// int calc_time(struct timeval begin)
+// {
+// 	int				result;
+// 	struct timeval	time;
 
-	gettimeofday(&time, NULL);
-	result = (time.tv_sec * 1000) + (time.tv_usec / 1000);
-	result -= (begin.tv_sec * 1000) + (begin.tv_usec / 1000);
+// 	gettimeofday(&time, NULL);
+// 	result = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+// 	result -= (begin.tv_sec * 1000) + (begin.tv_usec / 1000);
+// 	return (result);
+// }
+
+struct timeval	the_time(void)
+{
+	struct timeval	t_now;
+
+	gettimeofday(&t_now, NULL);
+	return (t_now);
+}
+
+int	calc_time(struct timeval now, struct timeval start)
+{
+	int	result;
+
+	result = (now.tv_sec * 1000 + now.tv_usec / 1000);
+	result -= (start.tv_sec * 1000 + start.tv_usec / 1000);
 	return (result);
 }
 
@@ -28,9 +45,9 @@ void	philo_death(t_ryusupov *philo)
 	pthread_mutex_lock(&philo->data->mutex_death);
 	if (philo->data->end == 0)
 	{
-		if (calc_time(philo->t_food) > philo->data->death_time)
+		if (calc_time(the_time(), philo->t_food) > philo->data->death_time)
 		{
-			philo_status(philo, 'd');
+			put_death(philo);
 			philo->data->end = 1;
 		}
 		if (philo->data->completed_eating == philo->data->philo_count)
@@ -48,10 +65,10 @@ void	philo_sleep(t_ryusupov *philo, int i)
 	int				res;
 
 	gettimeofday(&time, NULL);
-	res = calculate_time(time, philo->data->t_time);
+	res = calc_time(time, philo->data->begin);
 	res += i;
 	gettimeofday(&now, NULL);
-	while (calculate_time(now, philo->data->t_time) < res)
+	while (calc_time(now, philo->data->begin) < res)
 	{
 		philo_death(philo);
 		usleep(100);

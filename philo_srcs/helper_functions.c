@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:25:25 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/19 14:12:08 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/22 00:06:39 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,57 @@ int	error_msg(char *msg, int return_value)
 	return (return_value);
 }
 
-int	ft_atoi(char *str)
+int	ft_strlen(const char *s)
 {
-	unsigned long long int	num;
-	int						i;
+	int	i;
 
 	i = 0;
-	num = 0;
-	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
+
+int	ft_atoi(const char *str)
+{
+	int				i;
+	unsigned long	result;
+
+	i = 0;
+	result = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		num = num * 10 + (str[i] - '0');
+		if (str[i] == '-')
+			return (0);
 		i++;
 	}
-	if (num > INT_MAX)
-		return (-1);
-	return ((int)num);
+	while (str[i] >= 48 && str[i] <= 57)
+	{
+		result = (result * 10) + (str[i] - '0');
+		i++;
+	}
+	if (i < ft_strlen(str) || result > INT_MAX)
+		return (0);
+	return ((int)result);
 }
+
+// int	ft_atoi(char *str)
+// {
+// 	unsigned long long int	num;
+// 	int						i;
+
+// 	i = 0;
+// 	num = 0;
+// 	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
+// 	{
+// 		num = num * 10 + (str[i] - '0');
+// 		i++;
+// 	}
+// 	if (num > INT_MAX)
+// 		return (-1);
+// 	return ((int)num);
+// }
 
 int	is_digit(char *str)
 {

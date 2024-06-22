@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/19 14:29:55 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/21 23:53:59 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_ryusupov
 	int					philo_count;
 	int					completed_eating;
 	int					end;
-	struct timeval		t_time;
 	struct timeval		t_food;
 	struct timeval		now;
 	struct timeval		begin;
@@ -48,7 +47,7 @@ int		valid_input(int argc, char** argv);
 void	init_values(t_ryusupov *data, int argc, char **argv);
 /*-------------Helper functions-------------*/
 int		error_msg(char* msg, int return_value);
-int		ft_atoi(char *str);
+int		ft_atoi(const char *str);
 int		is_digit(char *str);
 int		get_index(t_ryusupov *philo, int i);
 /*--------------Actions----------------*/
@@ -56,9 +55,15 @@ void	*routine(void *argv);
 void	philo_death(t_ryusupov *philo);
 void	think_eat_sleep(t_ryusupov *philo, int i);
 void	philo_status(t_ryusupov *philo, char c);
-int 	calc_time(struct timeval begin);
-int		calculate_time(struct timeval now, struct timeval begin);
+int		calc_time(struct timeval now, struct timeval start);
 void	philo_sleep(t_ryusupov *philo, int i);
 void	init_threads(t_ryusupov *data);
+void	join_threads (t_ryusupov *data, pthread_t *philo);
+void	put_death(t_ryusupov *philo);
+int		calc_timestamp(struct timeval start);
+
+void	ft_free_philos(pthread_t *philos);
+void	ft_free_c_data(t_ryusupov *c_data);
+void	ft_free_philo(t_ryusupov *philo);
 
 #endif
