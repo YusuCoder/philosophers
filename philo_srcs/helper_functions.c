@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   helper_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:25:25 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/22 00:06:39 by mac              ###   ########.fr       */
+/*   Updated: 2024/06/24 15:42:39 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
 int	calculate_time(struct timeval now, struct timeval begin)
 {
 	int	res;
@@ -67,23 +68,6 @@ int	ft_atoi(const char *str)
 		return (0);
 	return ((int)result);
 }
-
-// int	ft_atoi(char *str)
-// {
-// 	unsigned long long int	num;
-// 	int						i;
-
-// 	i = 0;
-// 	num = 0;
-// 	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
-// 	{
-// 		num = num * 10 + (str[i] - '0');
-// 		i++;
-// 	}
-// 	if (num > INT_MAX)
-// 		return (-1);
-// 	return ((int)num);
-// }
 
 int	is_digit(char *str)
 {

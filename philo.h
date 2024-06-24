@@ -3,15 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/21 23:53:59 by mac              ###   ########.fr       */
+/*   Updated: 2024/06/24 17:17:00 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
+# define RED "\x1b[31m"
+# define GREEN "\x1b[32m"
+# define YELLOW "\x1b[33m"
+# define BLUE "\x1b[34m"
+# define CYAN "\x1b[35m"
+# define RESET "\x1b[0m"
+//ANSI TEXT STYLE
+# define BOLD "\x1b[1m"
+# define RESET "\x1b[0m"
 /*-------Standart libraries-------*/
 #include <unistd.h>
 #include <stdio.h>
@@ -62,8 +71,6 @@ void	join_threads (t_ryusupov *data, pthread_t *philo);
 void	put_death(t_ryusupov *philo);
 int		calc_timestamp(struct timeval start);
 
-void	ft_free_philos(pthread_t *philos);
 void	ft_free_c_data(t_ryusupov *c_data);
-void	ft_free_philo(t_ryusupov *philo);
 
 #endif

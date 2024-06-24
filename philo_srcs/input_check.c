@@ -3,29 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   input_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:21:58 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/21 22:51:49 by mac              ###   ########.fr       */
+/*   Updated: 2024/06/24 16:45:31 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	ft_free_philo(t_ryusupov *philo)
-{
-	free(philo);
-}
-
 void	ft_free_c_data(t_ryusupov *c_data)
 {
 	free(c_data->mutexx);
 	free(c_data->forks);
-}
-
-void	ft_free_philos(pthread_t *philos)
-{
-	free(philos);
 }
 
 int	calc_timestamp(struct timeval start)
@@ -45,7 +35,7 @@ void	put_death(t_ryusupov *philo)
 
 	timestamp = calc_timestamp(philo->data->begin);
 	pthread_mutex_lock(&philo->data->mutex_st);
-	printf("%d %d died\n", timestamp, philo->i_philo + 1);
+	printf(RED"%d %d died\n"RESET, timestamp, philo->i_philo + 1);
 	pthread_mutex_unlock(&philo->data->mutex_st);
 }
 

@@ -6,13 +6,13 @@
 #    By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/12 18:08:30 by ryusupov          #+#    #+#              #
-#    Updated: 2024/06/19 14:27:39 by ryusupov         ###   ########.fr        #
+#    Updated: 2024/06/24 16:41:07 by ryusupov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= philo
 CC			:= gcc
-CFLAGS		:= -Wall -Wextra -Werror -g -fsanitize=thread
+CFLAGS		:= -Wall -Wextra -Werror -g -fsanitize=address
 RM			:= rm -rf
 
 OBJ_PATH	:= ./objs

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_philo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:34:36 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/21 23:54:58 by mac              ###   ########.fr       */
+/*   Updated: 2024/06/24 16:13:02 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,56 +65,32 @@ void	init_philo(t_ryusupov *philo, t_ryusupov *data, int i)
 	philo->food = 0;
 	philo->data = data;
 }
-void	ft_create_threads(t_ryusupov *c_data, pthread_t *philos)
-{
-	t_ryusupov	*philo;
-	int		i;
-
-	i = 0;
-	pthread_mutex_init(&c_data->mutex_st, NULL);
-	pthread_mutex_init(&c_data->mutex_death, NULL);
-	while (i < c_data->philo_count)
-	{
-		if (i == c_data->philo_count - 1)
-			gettimeofday(&c_data->begin, NULL);
-		philo = malloc(sizeof(t_ryusupov));
-		init_philo(philo, c_data, i);
-		pthread_mutex_init(&c_data->mutexx[i], NULL);
-		if (pthread_create(&philos[i], NULL, routine, philo) != 0)
-			printf("Failed to join thread\n");
-		i++;
-	}
-	join_threads(c_data, philos);
-}
 
 void	init_threads(t_ryusupov *data)
 {
-	pthread_t		*philos;
+	pthread_t	*philo;
+	int			i;
+	t_ryusupov	*philo_data;
 
-	philos = malloc(sizeof(pthread_t) * data->philo_count);
-	ft_create_threads(data, philos);
+	philo = malloc(sizeof(pthread_t) * data->philo_count);
+	i = 0;
+	pthread_mutex_init(&data->mutex_st, NULL);
+	pthread_mutex_init(&data->mutex_death, NULL);
+	while (i < data->philo_count)
+	{
+		if (i == data->philo_count - 1)
+			gettimeofday(&data->begin, NULL);
+		philo_data = malloc(sizeof(t_ryusupov));
+		init_philo(philo_data, data, i);
+		pthread_mutex_init(&data->mutexx[i], NULL);
+		if (pthread_create(&philo[i], NULL, routine, philo_data) != 0)
+		{
+			printf("Failed to create thread %d\n", i);
+			free(philo);
+			break ;
+		}
+		i++;
+	}
+	join_threads(data, philo);
 }
 
-// void	init_threads(t_ryusupov *data)
-// {
-// 	pthread_t	*philo;
-// 	int			i;
-// 	t_ryusupov	*philo_data;
-
-// 	philo = malloc(sizeof(pthread_t) * data->philo_count);
-// 	i = 0;
-// 	pthread_mutex_init(&data->mutex_st, NULL);
-// 	pthread_mutex_init(&data->mutex_death, NULL);
-// 	while (i < data->philo_count)
-// 	{
-// 		if (i == data->philo_count - 1)
-// 			gettimeofday(&data->begin, NULL);
-// 		philo_data = malloc(sizeof(t_ryusupov));
-// 		init_philo(philo_data, data, i);
-// 		pthread_mutex_init(&data->mutexx[i], NULL);
-// 		if (pthread_create(&philo[i], NULL, routine, philo_data) != 0)
-// 			printf("Failed to create thread %d\n", i);
-// 		i++;
-// 	}
-// 	join_threads(data, philo);
-// }
