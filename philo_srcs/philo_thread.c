@@ -6,13 +6,13 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:25:58 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/24 16:46:52 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/25 14:02:31 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	join_threads (t_ryusupov *data, pthread_t *philo)
+void	join_threads(t_ryusupov *data, pthread_t *philo)
 {
 	int	i;
 
@@ -41,24 +41,25 @@ void	philo_status(t_ryusupov *philo, char c)
 	{
 		pthread_mutex_lock(&philo->data->mutex_st);
 		if (c == 'f')
-			printf(YELLOW"%d %d has taken a fork\n"RESET, i, philo->i_philo + 1);
+			printf(YELLOW "%d %d has taken a fork\n" RESET, i, philo->i_philo
+					+ 1);
 		else if (c == 'e')
-			printf(GREEN"%d %d is eating\n"RESET, i, philo->i_philo + 1);
+			printf(GREEN "%d %d is eating\n" RESET, i, philo->i_philo + 1);
 		else if (c == 's')
-			printf(BLUE"%d %d is sleeping\n"RESET, i, philo->i_philo + 1);
+			printf(BLUE "%d %d is sleeping\n" RESET, i, philo->i_philo + 1);
 		else if (c == 't')
-			printf(CYAN"%d %d is thinking\n"RESET, i, philo->i_philo + 1);
+			printf(CYAN "%d %d is thinking\n" RESET, i, philo->i_philo + 1);
 		else if (c == 'd')
-			printf(RED"%d %d died\n"RESET, i, philo->i_philo + 1);
+			printf(RED "%d %d died\n" RESET, i, philo->i_philo + 1);
 		pthread_mutex_unlock(&philo->data->mutex_st);
 	}
 }
 
 void	sleep_dead(t_ryusupov *philo)
 {
-		philo_sleep(philo, philo->data->death_time);
-		philo_status(philo, 'd');
-		free(philo);
+	philo_sleep(philo, philo->data->death_time);
+	philo_status(philo, 'd');
+	free(philo);
 }
 
 void	*routine(void *argv)
@@ -66,23 +67,75 @@ void	*routine(void *argv)
 	t_ryusupov	*philo;
 
 	philo = argv;
-	while (philo->data->begin.tv_usec == 0)
+	while (1)
+	{
+		pthread_mutex_lock(&philo->data->mutex_st);
+		if (philo->data->begin.tv_usec != 0)
+		{
+			pthread_mutex_unlock(&philo->data->mutex_st);
+			break ;
+		}
+		pthread_mutex_unlock(&philo->data->mutex_st);
 		usleep(100);
-	gettimeofday(&philo->data->begin, NULL);
+	}
 	gettimeofday(&philo->t_food, NULL);
 	if ((philo->i_philo + 1) % 2 != 0)
 		usleep(100);
 	if (philo->data->philo_count > 1)
 	{
-		while (philo->data->end == 0)
+		while (1)
 		{
+			pthread_mutex_lock(&philo->data->mutex_st);
+			if (philo->data->end != 0)
+			{
+				pthread_mutex_unlock(&philo->data->mutex_st);
+				break ;
+			}
+			pthread_mutex_unlock(&philo->data->mutex_st);
 			philo_death(philo);
+			pthread_mutex_lock(&philo->data->mutex_st);
 			if (philo->data->end == 0)
+			{
+				pthread_mutex_unlock(&philo->data->mutex_st);
 				think_eat_sleep(philo, philo->i_philo);
+			}
+			else
+			{
+				pthread_mutex_unlock(&philo->data->mutex_st);
+				break ;
+			}
 		}
 		free(philo);
 	}
 	else
+	{
 		sleep_dead(philo);
+	}
 	return (NULL);
 }
+
+// void	*routine(void *argv)
+// {
+// 	t_ryusupov	*philo;
+
+// 	philo = argv;
+// 	while (philo->data->begin.tv_usec == 0)
+// 		usleep(100);
+// 	gettimeofday(&philo->data->begin, NULL);
+// 	gettimeofday(&philo->t_food, NULL);
+// 	if ((philo->i_philo + 1) % 2 != 0)
+// 		usleep(100);
+// 	if (philo->data->philo_count > 1)
+// 	{
+// 		while (philo->data->end == 0)
+// 		{
+// 			philo_death(philo);
+// 			if (philo->data->end == 0)
+// 				think_eat_sleep(philo, philo->i_philo);
+// 		}
+// 		free(philo);
+// 	}
+// 	else
+// 		sleep_dead(philo);
+// 	return (NULL);
+// }

@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/24 17:17:00 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/25 14:10:53 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_ryusupov
 	struct timeval		begin;
 	pthread_mutex_t		*mutexx;
 	pthread_mutex_t		mutex_st;
+	pthread_mutex_t		*fork_mutex;
 	pthread_mutex_t		mutex_death;
 	int					i_philo;
 	int					food;

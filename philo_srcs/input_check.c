@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:21:58 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/24 16:45:31 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/25 14:00:18 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,28 @@ void	ft_free_c_data(t_ryusupov *c_data)
 
 int	calc_timestamp(struct timeval start)
 {
-	int				result;
 	struct timeval	now;
+	long			seconds;
+	long			microseconds;
+	int				result;
 
 	gettimeofday(&now, NULL);
-	result = (now.tv_sec * 1000) + (now.tv_usec / 1000);
-	result -= (start.tv_sec * 1000) + (start.tv_usec / 1000);
+	seconds = now.tv_sec - start.tv_sec;
+	microseconds = now.tv_usec - start.tv_usec;
+	result = (seconds * 1000) + (microseconds / 1000);
 	return (result);
 }
+
+// int	calc_timestamp(struct timeval start)
+// {
+// 	int				result;
+// 	struct timeval	now;
+
+// 	gettimeofday(&now, NULL);
+// 	result = (now.tv_sec * 1000) + (now.tv_usec / 1000);
+// 	result -= (start.tv_sec * 1000) + (start.tv_usec / 1000);
+// 	return (result);
+// }
 
 void	put_death(t_ryusupov *philo)
 {
@@ -35,7 +49,7 @@ void	put_death(t_ryusupov *philo)
 
 	timestamp = calc_timestamp(philo->data->begin);
 	pthread_mutex_lock(&philo->data->mutex_st);
-	printf(RED"%d %d died\n"RESET, timestamp, philo->i_philo + 1);
+	printf(RED "%d %d died\n" RESET, timestamp, philo->i_philo + 1);
 	pthread_mutex_unlock(&philo->data->mutex_st);
 }
 
