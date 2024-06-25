@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:21:58 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/25 14:00:18 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/25 14:23:42 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,6 @@ int	calc_timestamp(struct timeval start)
 	result = (seconds * 1000) + (microseconds / 1000);
 	return (result);
 }
-
-// int	calc_timestamp(struct timeval start)
-// {
-// 	int				result;
-// 	struct timeval	now;
-
-// 	gettimeofday(&now, NULL);
-// 	result = (now.tv_sec * 1000) + (now.tv_usec / 1000);
-// 	result -= (start.tv_sec * 1000) + (start.tv_usec / 1000);
-// 	return (result);
-// }
 
 void	put_death(t_ryusupov *philo)
 {
