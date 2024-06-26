@@ -6,28 +6,11 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:28:09 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/25 15:57:52 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:36:14 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
-struct timeval	the_time(void)
-{
-	struct timeval	t_now;
-
-	gettimeofday(&t_now, NULL);
-	return (t_now);
-}
-
-int	calc_time(struct timeval now, struct timeval start)
-{
-	int	result;
-
-	result = (now.tv_sec * 1000 + now.tv_usec / 1000);
-	result -= (start.tv_sec * 1000 + start.tv_usec / 1000);
-	return (result);
-}
 
 void	philo_death(t_ryusupov *philo)
 {
@@ -67,66 +50,31 @@ void	philo_sleep(t_ryusupov *philo, int i)
 
 void	philo_eat(t_ryusupov *philo, int *right_fork, int *left_fork, int i)
 {
-	int	left_index;
-	int	right_index;
+	t_fork_info	fork_info;
 
-	left_index = get_index(philo, i - 1);
-	right_index = i;
-	if (left_index < right_index)
+	fork_info.left_index = get_index(philo, i - 1);
+	fork_info.right_index = i;
+	fork_info.left_fork = left_fork;
+	fork_info.right_fork = right_fork;
+	if (fork_info.left_index < fork_info.right_index)
 	{
-		pthread_mutex_lock(&philo->data->mutexx[left_index]);
-		*left_fork = 0;
-		philo_status(philo, 'f');
-		pthread_mutex_lock(&philo->data->mutexx[right_index]);
-		*right_fork = 0;
-		philo_status(philo, 'f');
+		philo_take_forks_left_first(philo, &fork_info);
 	}
 	else
 	{
-		pthread_mutex_lock(&philo->data->mutexx[right_index]);
-		*right_fork = 0;
-		philo_status(philo, 'f');
-		pthread_mutex_lock(&philo->data->mutexx[left_index]);
-		*left_fork = 0;
-		philo_status(philo, 'f');
+		philo_take_forks_right_first(philo, &fork_info);
 	}
 	gettimeofday(&philo->t_food, NULL);
 	philo->food++;
 	if (philo->food == philo->data->eat_count)
-	{
 		philo->data->completed_eating++;
-	}
 	philo_status(philo, 'e');
 	philo_sleep(philo, philo->data->eat_time);
-	*left_fork = 1;
-	pthread_mutex_unlock(&philo->data->mutexx[left_index]);
-	*right_fork = 1;
-	pthread_mutex_unlock(&philo->data->mutexx[right_index]);
+	*(fork_info.left_fork) = 1;
+	pthread_mutex_unlock(&philo->data->mutexx[fork_info.left_index]);
+	*(fork_info.right_fork) = 1;
+	pthread_mutex_unlock(&philo->data->mutexx[fork_info.right_index]);
 }
-
-// void	philo_eat(t_ryusupov *philo, int *right_fork, int *left_fork, int i)
-// {
-// 	pthread_mutex_lock(&philo->data->mutexx[get_index(philo, i - 1)]);
-// 	*left_fork = 0;
-// 	philo_status(philo, 'f');
-// 	pthread_mutex_lock(&philo->data->mutexx[i]);
-// 	*right_fork = 0;
-// 	philo_status(philo, 'f');
-// 	gettimeofday(&philo->t_food, NULL);
-// 	philo->food++;
-// 	if (philo->food == philo->data->eat_count)
-// 	{
-// 		philo->data->completed_eating++;
-// 		philo->food++;
-// 	}
-// 	philo_status(philo, 'e');
-// 	philo_sleep(philo, philo->data->eat_time);
-// 	*left_fork = 1;
-// 	pthread_mutex_unlock(&philo->data->mutexx[get_index(philo, i - 1)]);
-// 	*right_fork = 1;
-// 	pthread_mutex_unlock(&philo->data->mutexx[i]);
-// }
-
 
 void	think_eat_sleep(t_ryusupov *philo, int i)
 {

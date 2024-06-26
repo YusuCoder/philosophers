@@ -6,13 +6,13 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:28:22 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/15 18:00:26 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:49:27 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int argc, char** argv)
+int	main(int argc, char **argv)
 {
 	t_ryusupov	data;
 

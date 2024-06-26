@@ -6,11 +6,28 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:25:25 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/24 15:42:39 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:57:30 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
+struct timeval	the_time(void)
+{
+	struct timeval	t_now;
+
+	gettimeofday(&t_now, NULL);
+	return (t_now);
+}
+
+int	calc_time(struct timeval now, struct timeval start)
+{
+	int	result;
+
+	result = (now.tv_sec * 1000 + now.tv_usec / 1000);
+	result -= (start.tv_sec * 1000 + start.tv_usec / 1000);
+	return (result);
+}
 
 int	calculate_time(struct timeval now, struct timeval begin)
 {
@@ -26,59 +43,4 @@ int	get_index(t_ryusupov *philo, int i)
 	if (i < 0)
 		return (philo->data->philo_count - 1);
 	return (i);
-}
-
-int	error_msg(char *msg, int return_value)
-{
-	printf("%s", msg);
-	return (return_value);
-}
-
-int	ft_strlen(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
-
-int	ft_atoi(const char *str)
-{
-	int				i;
-	unsigned long	result;
-
-	i = 0;
-	result = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			return (0);
-		i++;
-	}
-	while (str[i] >= 48 && str[i] <= 57)
-	{
-		result = (result * 10) + (str[i] - '0');
-		i++;
-	}
-	if (i < ft_strlen(str) || result > INT_MAX)
-		return (0);
-	return ((int)result);
-}
-
-int	is_digit(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] < '0' || str[i] > '9')
-			return (1);
-		i++;
-	}
-	return (0);
 }
