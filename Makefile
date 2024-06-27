@@ -6,13 +6,13 @@
 #    By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/12 18:08:30 by ryusupov          #+#    #+#              #
-#    Updated: 2024/06/26 19:02:21 by ryusupov         ###   ########.fr        #
+#    Updated: 2024/06/27 16:31:34 by ryusupov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= philo
 CC			:= gcc
-CFLAGS		:= -Wall -Wextra -Werror -g
+CFLAGS		:= -Wall -Wextra -Werror -g -pthread
 RM			:= rm -rf
 #####################################################
 #						PATHS						#
@@ -75,8 +75,8 @@ re: fclean all
      @printf "\033[0m\n\n\n"
      @sleep 0.5
      @for frame in $(FRAMES); do \
-         printf "\x1b[35m%s\n\033[0m" $$frame; \
-         sleep 0.1; \
+         printf "\033[1;35m%s\n\033[0m" "$$frame"; \
+		sleep 0.1; \
      done
      @echo
  endef

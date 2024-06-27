@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:34:36 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/26 17:49:48 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/27 18:23:09 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,11 @@ void	init_threads(t_ryusupov *data)
 	while (i < data->philo_count)
 	{
 		if (i == data->philo_count - 1)
+		{
+			pthread_mutex_lock(&data->mutex_st);
 			gettimeofday(&data->begin, NULL);
+			pthread_mutex_unlock(&data->mutex_st);
+		}
 		philo_data = malloc(sizeof(t_ryusupov));
 		init_philo(philo_data, data, i);
 		pthread_mutex_init(&data->mutexx[i], NULL);
