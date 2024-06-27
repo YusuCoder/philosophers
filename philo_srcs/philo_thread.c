@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:25:58 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/27 18:03:19 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/27 19:34:09 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	philo_status(t_ryusupov *philo, char c)
 {
 	int	i;
 
-	pthread_mutex_lock(&philo->data->mutex_st);
 	i = calc_timestamp(philo->data->begin);
 	if (philo->data->end == 0)
 	{
@@ -52,7 +51,6 @@ void	philo_status(t_ryusupov *philo, char c)
 		else if (c == 'd')
 			printf(RED "%d %d died\n" RESET, i, philo->i_philo + 1);
 	}
-	pthread_mutex_unlock(&philo->data->mutex_st);
 }
 
 void	sleep_dead(t_ryusupov *philo)

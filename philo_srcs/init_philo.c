@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:34:36 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/27 18:23:09 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/27 18:54:34 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	init_threads(t_ryusupov *data)
 	i = 0;
 	pthread_mutex_init(&data->mutex_st, NULL);
 	pthread_mutex_init(&data->mutex_death, NULL);
+	pthread_mutex_init(&data->fork_mutex, NULL);
 	while (i < data->philo_count)
 	{
 		if (i == data->philo_count - 1)
