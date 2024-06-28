@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:28:09 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/27 19:57:16 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:43:41 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,30 @@
 void	philo_death(t_ryusupov *philo)
 {
 	pthread_mutex_lock(&philo->data->mutex_st);
+	philo->is_locked = 1;
 	if (philo->data->end == 0)
 	{
+		pthread_mutex_unlock(&philo->data->mutex_st);
+		philo->is_locked = 0;
 		if (calc_time(the_time(), philo->t_food) > philo->data->death_time)
 		{
-			pthread_mutex_lock(&philo->data->mutex_death);
 			philo_status(philo, 'd');
+			pthread_mutex_lock(&philo->data->mutex_st);
 			philo->data->end = 1;
-			pthread_mutex_unlock(&philo->data->mutex_death);
+			pthread_mutex_unlock(&philo->data->mutex_st);
 		}
 		if (philo->data->completed_eating == philo->data->philo_count)
 		{
+			pthread_mutex_lock(&philo->data->mutex_st);
 			philo->data->end = 1;
+			pthread_mutex_unlock(&philo->data->mutex_st);
 		}
 	}
-	pthread_mutex_unlock(&philo->data->mutex_st);
+	if (philo->is_locked)
+	{
+		pthread_mutex_unlock(&philo->data->mutex_st);
+		philo->is_locked = 0;
+	}
 }
 
 
@@ -92,15 +101,20 @@ void	think_eat_sleep(t_ryusupov *philo, int i)
 	left_fork = &philo->data->forks[get_index(philo, philo->i_philo - 1)];
 	philo_death(philo);
 	pthread_mutex_lock(&philo->data->fork_mutex);
+	philo->fork_flag = 1;
 	if (*left_fork == 1)
 	{
 		pthread_mutex_unlock(&philo->data->fork_mutex);
+		philo->fork_flag = 0;
 		philo_eat(philo, right_fork, left_fork, i);
-		pthread_mutex_lock(&philo->data->fork_mutex);
 		philo_status(philo, 's');
 		philo_sleep(philo, philo->data->sleep_time);
 		philo_status(philo, 't');
 		usleep(100);
 	}
-	pthread_mutex_unlock(&philo->data->fork_mutex);
+	if (philo->fork_flag)
+	{
+		pthread_mutex_unlock(&philo->data->fork_mutex);
+		philo->fork_flag = 0;
+	}
 }

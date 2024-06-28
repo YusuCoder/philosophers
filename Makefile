@@ -6,7 +6,7 @@
 #    By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/12 18:08:30 by ryusupov          #+#    #+#              #
-#    Updated: 2024/06/27 16:31:34 by ryusupov         ###   ########.fr        #
+#    Updated: 2024/06/28 16:40:10 by ryusupov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ git_sub_update:
 
 $(NAME): $(MAIN_OBJ) $(PHILO_OBJS)
 	@$(CC) $(CFLAGS) $^ -o $@
-	$(ANIMATE_WELCOME)
+#	$(ANIMATE_WELCOME)
 
 $(OBJ_PATH)/%.o: %.c
 	@mkdir -p $(@D)

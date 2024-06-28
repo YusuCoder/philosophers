@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/27 18:54:21 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:34:35 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct s_ryusupov
 	pthread_mutex_t		mutex_death;
 	int					i_philo;
 	int					food;
+	int					is_locked;
+	int 				fork_flag;
 	struct s_ryusupov	*data;
 }						t_ryusupov;
 
