@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:23:47 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/02 16:42:05 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/02 17:07:27 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,3 @@ int	lock_forks(t_ryusupov *philo, t_fork_info *fork_info)
 	}
 	return (0);
 }
-

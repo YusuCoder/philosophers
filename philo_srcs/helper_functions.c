@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:25:25 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/26 16:57:30 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/02 17:17:51 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,11 @@ int	get_index(t_ryusupov *philo, int i)
 	if (i < 0)
 		return (philo->data->philo_count - 1);
 	return (i);
+}
+
+void	data_time(t_ryusupov *data)
+{
+	pthread_mutex_lock(&data->mutex_st);
+	gettimeofday(&data->begin, NULL);
+	pthread_mutex_unlock(&data->mutex_st);
 }

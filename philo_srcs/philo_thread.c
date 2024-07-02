@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:25:58 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/28 18:49:29 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/02 17:08:56 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,9 @@ void	philo_status(t_ryusupov *philo, char c)
 
 	i = calc_timestamp(philo->data->begin);
 	pthread_mutex_lock(&philo->data->mutex_st);
-	philo->is_locked = 1;
 	if (philo->data->end == 0)
 	{
 		pthread_mutex_unlock(&philo->data->mutex_st);
-		philo->is_locked = 0;
 		if (c == 'f')
 			printf(YELLOW "%d %d has taken a fork\n" RESET, i, philo->i_philo
 				+ 1);
@@ -55,11 +53,8 @@ void	philo_status(t_ryusupov *philo, char c)
 		else if (c == 'd')
 			printf(RED "%d %d died\n" RESET, i, philo->i_philo + 1);
 	}
-	if (philo->is_locked)
-	{
+	else
 		pthread_mutex_unlock(&philo->data->mutex_st);
-		philo->is_locked = 0;
-	}
 }
 
 void	sleep_dead(t_ryusupov *philo)
