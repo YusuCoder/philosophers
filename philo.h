@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/28 17:34:35 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/02 13:38:29 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_ryusupov
 	int					food;
 	int					is_locked;
 	int 				fork_flag;
+	int					died;
 	struct s_ryusupov	*data;
 }						t_ryusupov;
 

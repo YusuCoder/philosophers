@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:51:01 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/28 16:42:02 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/02 13:41:11 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	routine_loop(t_ryusupov *philo)
 	while (1)
 	{
 		pthread_mutex_lock(&philo->data->mutex_st);
-		if (philo->data->end != 0)
+		if (philo->data->end == 1)
 		{
 			pthread_mutex_unlock(&philo->data->mutex_st);
 			break ;
