@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:28:09 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/02 15:54:10 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/02 16:45:53 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,45 +91,20 @@ void	philo_eat(t_ryusupov *philo, int *right_fork, int *left_fork, int i)
 
 void	think_eat_sleep(t_ryusupov *philo, int i)
 {
-	int			*right_fork;
-	int			*left_fork;
 	t_fork_info	fork_info;
 
-	right_fork = &philo->data->forks[philo->i_philo];
-	left_fork = &philo->data->forks[get_index(philo, philo->i_philo - 1)];
-	fork_info.left_index = get_index(philo, philo->i_philo - 1);
-	fork_info.right_index = philo->i_philo;
-	fork_info.left_fork = left_fork;
-	fork_info.right_fork = right_fork;
-
+	setup_fork_info(philo, &fork_info);
 	if (philo->data->end)
-		return;
-
-	if (fork_info.left_index < fork_info.right_index)
+		return ;
+	if (lock_forks(philo, &fork_info))
+		return ;
+	if (*fork_info.left_fork == 1 && *fork_info.right_fork == 1)
 	{
-		pthread_mutex_lock(&philo->data->mutexx[fork_info.left_index]);
-		pthread_mutex_lock(&philo->data->mutexx[fork_info.right_index]);
-	}
-	else
-	{
-		pthread_mutex_lock(&philo->data->mutexx[fork_info.right_index]);
-		pthread_mutex_lock(&philo->data->mutexx[fork_info.left_index]);
-	}
-	if (philo->data->end)
-	{
+		*fork_info.left_fork = 0;
+		*fork_info.right_fork = 0;
 		pthread_mutex_unlock(&philo->data->mutexx[fork_info.left_index]);
 		pthread_mutex_unlock(&philo->data->mutexx[fork_info.right_index]);
-		return;
-	}
-
-	if (*left_fork == 1 && *right_fork == 1)
-	{
-		*left_fork = 0;
-		*right_fork = 0;
-		pthread_mutex_unlock(&philo->data->mutexx[fork_info.left_index]);
-		pthread_mutex_unlock(&philo->data->mutexx[fork_info.right_index]);
-
-		philo_eat(philo, right_fork, left_fork, i);
+		philo_eat(philo, fork_info.right_fork, fork_info.left_fork, i);
 		philo_status(philo, 's');
 		philo_sleep(philo, philo->data->sleep_time);
 		philo_status(philo, 't');
