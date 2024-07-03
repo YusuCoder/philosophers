@@ -6,11 +6,19 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:51:01 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/02 13:41:11 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/03 12:59:05 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
+void	set_fork_available(t_ryusupov *philo, t_fork_info fork_info)
+{
+	*(fork_info.left_fork) = 1;
+	*(fork_info.right_fork) = 1;
+	pthread_mutex_unlock(&philo->data->mutexx[fork_info.left_index]);
+	pthread_mutex_unlock(&philo->data->mutexx[fork_info.right_index]);
+}
 
 void	wait_for_start(t_ryusupov *philo)
 {

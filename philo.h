@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/02 17:18:31 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/03 12:48:59 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,8 @@ void					setup_fork_info(t_ryusupov *philo,
 							t_fork_info *fork_info);
 int						lock_forks(t_ryusupov *philo, t_fork_info *fork_info);
 void					data_time(t_ryusupov *data);
+void					set_end(t_ryusupov *philo);
+void					set_fork_available(t_ryusupov *philo,
+							t_fork_info fork_info);
 
 #endif
