@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:28:09 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/02 16:45:53 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/03 10:38:37 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,20 @@ void	philo_death(t_ryusupov *philo)
 			philo->data->end = 1;
 			pthread_mutex_unlock(&philo->data->mutex_st);
 		}
+		pthread_mutex_lock(&philo->data->mutex_st);
+		philo->is_locked = 1;
 		if (philo->data->completed_eating == philo->data->philo_count)
 		{
+			pthread_mutex_unlock(&philo->data->mutex_st);
+			philo->is_locked = 0;
 			pthread_mutex_lock(&philo->data->mutex_st);
 			philo->data->end = 1;
 			pthread_mutex_unlock(&philo->data->mutex_st);
+		}
+		if (philo->is_locked)
+		{
+			pthread_mutex_unlock(&philo->data->mutex_st);
+			philo->is_locked = 0;
 		}
 	}
 	if (philo->is_locked)
@@ -39,6 +48,7 @@ void	philo_death(t_ryusupov *philo)
 		pthread_mutex_unlock(&philo->data->mutex_st);
 		philo->is_locked = 0;
 	}
+	usleep(1);
 }
 
 void	philo_sleep(t_ryusupov *philo, int i)
@@ -79,13 +89,23 @@ void	philo_eat(t_ryusupov *philo, int *right_fork, int *left_fork, int i)
 	}
 	gettimeofday(&philo->t_food, NULL);
 	philo->food++;
+	pthread_mutex_lock(&philo->data->mutex_st);
 	if (philo->food == philo->data->eat_count)
+	{
 		philo->data->completed_eating++;
+		pthread_mutex_unlock(&philo->data->mutex_st);
+	}
+	else
+		pthread_mutex_unlock(&philo->data->mutex_st);
 	philo_status(philo, 'e');
 	philo_sleep(philo, philo->data->eat_time);
+	if (lock_forks(philo, &fork_info))
+		return ;
+	// pthread_mutex_lock(&philo->data->mutexx[fork_info.left_index]);
 	*(fork_info.left_fork) = 1;
-	pthread_mutex_lock(&philo->data->mutexx[fork_info.right_index]);
+	// pthread_mutex_lock(&philo->data->mutexx[fork_info.right_index]);
 	*(fork_info.right_fork) = 1;
+	pthread_mutex_unlock(&philo->data->mutexx[fork_info.left_index]);
 	pthread_mutex_unlock(&philo->data->mutexx[fork_info.right_index]);
 }
 
