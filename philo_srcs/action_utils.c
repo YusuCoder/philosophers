@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:23:47 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/02 17:07:27 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/03 11:06:14 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,19 @@ int	lock_forks(t_ryusupov *philo, t_fork_info *fork_info)
 		pthread_mutex_lock(&philo->data->mutexx[fork_info->right_index]);
 		pthread_mutex_lock(&philo->data->mutexx[fork_info->left_index]);
 	}
+	pthread_mutex_lock(&philo->data->mutex_st);
+	philo->is_locked = 1;
 	if (philo->data->end)
 	{
+		pthread_mutex_unlock(&philo->data->mutex_st);
 		pthread_mutex_unlock(&philo->data->mutexx[fork_info->left_index]);
 		pthread_mutex_unlock(&philo->data->mutexx[fork_info->right_index]);
 		return (1);
+	}
+	if (philo->is_locked)
+	{
+		pthread_mutex_unlock(&philo->data->mutex_st);
+		philo->is_locked = 0;
 	}
 	return (0);
 }

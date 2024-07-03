@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:28:09 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/03 10:38:37 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/03 11:06:29 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,7 @@ void	philo_eat(t_ryusupov *philo, int *right_fork, int *left_fork, int i)
 	philo_sleep(philo, philo->data->eat_time);
 	if (lock_forks(philo, &fork_info))
 		return ;
-	// pthread_mutex_lock(&philo->data->mutexx[fork_info.left_index]);
 	*(fork_info.left_fork) = 1;
-	// pthread_mutex_lock(&philo->data->mutexx[fork_info.right_index]);
 	*(fork_info.right_fork) = 1;
 	pthread_mutex_unlock(&philo->data->mutexx[fork_info.left_index]);
 	pthread_mutex_unlock(&philo->data->mutexx[fork_info.right_index]);
