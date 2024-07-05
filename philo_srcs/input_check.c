@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:21:58 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/06/25 14:23:42 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:07:44 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,6 @@ void	ft_free_c_data(t_ryusupov *c_data)
 {
 	free(c_data->mutexx);
 	free(c_data->forks);
-}
-
-int	calc_timestamp(struct timeval start)
-{
-	struct timeval	now;
-	long			seconds;
-	long			microseconds;
-	int				result;
-
-	gettimeofday(&now, NULL);
-	seconds = now.tv_sec - start.tv_sec;
-	microseconds = now.tv_usec - start.tv_usec;
-	result = (seconds * 1000) + (microseconds / 1000);
-	return (result);
 }
 
 void	put_death(t_ryusupov *philo)

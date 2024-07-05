@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:23:47 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/03 13:00:10 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:00:28 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	set_end(t_ryusupov *philo)
 {
-	put_death(philo);
 	pthread_mutex_lock(&philo->data->mutex_st);
 	philo->data->end = 1;
 	pthread_mutex_unlock(&philo->data->mutex_st);
+	put_death(philo);
 }
 
 void	philo_take_forks_left_first(t_ryusupov *philo, t_fork_info *fork_info)

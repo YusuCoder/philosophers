@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:25:25 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/02 17:17:51 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:07:40 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,14 @@ int	calc_time(struct timeval now, struct timeval start)
 	return (result);
 }
 
-int	calculate_time(struct timeval now, struct timeval begin)
+int	calc_timestamp(struct timeval start)
 {
 	int	res;
+	struct timeval now;
 
-	res = (now.tv_sec * 1000 + now.tv_usec / 1000);
-	res = (begin.tv_sec * 1000 + begin.tv_sec / 1000);
+	gettimeofday(&now, NULL);
+	res = (now.tv_sec * 1000) + (now.tv_usec / 1000);
+	res -= (start.tv_sec * 1000) + (start.tv_usec / 1000);
 	return (res);
 }
 

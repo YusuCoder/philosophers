@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:25:58 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/03 11:02:05 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/05 12:40:10 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ void	philo_status(t_ryusupov *philo, char c)
 			printf(BLUE "%d %d is sleeping\n" RESET, i, philo->i_philo + 1);
 		else if (c == 't')
 			printf(CYAN "%d %d is thinking\n" RESET, i, philo->i_philo + 1);
-		else if (c == 'd')
-			printf(RED "%d %d died\n" RESET, i, philo->i_philo + 1);
 	}
 	else
 		pthread_mutex_unlock(&philo->data->mutex_st);
@@ -62,7 +60,7 @@ void	sleep_dead(t_ryusupov *philo)
 	pthread_mutex_lock(&philo->data->mutex_death);
 	philo_sleep(philo, philo->data->death_time);
 	pthread_mutex_unlock(&philo->data->mutex_death);
-	philo_status(philo, 'd');
+	put_death(philo);
 	free(philo);
 }
 
