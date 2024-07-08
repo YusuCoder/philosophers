@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:28:09 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/05 12:35:12 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/08 13:21:03 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	philo_eat(t_ryusupov *philo, int *right_fork, int *left_fork, int i)
 	if (philo->food == philo->data->eat_count)
 	{
 		philo->data->completed_eating++;
+		if (philo->data->completed_eating == philo->data->philo_count)
+			philo->data->end = 1;
 		pthread_mutex_unlock(&philo->data->mutex_st);
 	}
 	else

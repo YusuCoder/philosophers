@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:28:22 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/08 12:20:55 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/08 12:22:36 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,4 @@ int	main(int argc, char **argv)
 	else
 		return (error_msg("Error!\n", 0));
 	return (0);
-	
 }
