@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:25:58 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/05 12:40:10 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/08 13:36:13 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,15 @@ void	philo_status(t_ryusupov *philo, char c)
 	pthread_mutex_lock(&philo->data->mutex_st);
 	if (philo->data->end == 0)
 	{
-		pthread_mutex_unlock(&philo->data->mutex_st);
 		if (c == 'f')
-			printf(YELLOW "%d %d has taken a fork\n" RESET, i, philo->i_philo
-				+ 1);
+			printf(YELLOW "%d %d has taken a fork\n" RESET, i, philo->i_philo + 1);
 		else if (c == 'e')
 			printf(GREEN "%d %d is eating\n" RESET, i, philo->i_philo + 1);
 		else if (c == 's')
 			printf(BLUE "%d %d is sleeping\n" RESET, i, philo->i_philo + 1);
 		else if (c == 't')
 			printf(CYAN "%d %d is thinking\n" RESET, i, philo->i_philo + 1);
+		pthread_mutex_unlock(&philo->data->mutex_st);
 	}
 	else
 		pthread_mutex_unlock(&philo->data->mutex_st);

@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:34:36 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/02 17:18:56 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/08 14:40:37 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	init_threads(t_ryusupov *data)
 			break ;
 		}
 		i++;
+		usleep(500);
 	}
 	join_threads(data, philo);
 }
