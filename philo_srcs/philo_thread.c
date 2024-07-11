@@ -6,11 +6,40 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:25:58 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/08 13:36:13 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:36:18 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
+void	philo_death(t_ryusupov *philo)
+{
+	pthread_mutex_lock(&philo->data->mutex_st);
+	philo->is_locked = 1;
+	if (philo->data->end == 0)
+	{
+		pthread_mutex_unlock(&philo->data->mutex_st);
+		philo->is_locked = 0;
+		if (calc_time(the_time(), philo->t_food) > philo->data->death_time)
+			set_end(philo);
+		pthread_mutex_lock(&philo->data->mutex_st);
+		philo->is_locked = 1;
+		if (philo->data->completed_eating == philo->data->philo_count)
+		{
+			pthread_mutex_unlock(&philo->data->mutex_st);
+			philo->is_locked = 0;
+			pthread_mutex_lock(&philo->data->mutex_st);
+			philo->data->end = 1;
+			pthread_mutex_unlock(&philo->data->mutex_st);
+		}
+	}
+	if (philo->is_locked)
+	{
+		pthread_mutex_unlock(&philo->data->mutex_st);
+		philo->is_locked = 0;
+	}
+	usleep(1);
+}
 
 void	join_threads(t_ryusupov *data, pthread_t *philo)
 {
@@ -41,7 +70,8 @@ void	philo_status(t_ryusupov *philo, char c)
 	if (philo->data->end == 0)
 	{
 		if (c == 'f')
-			printf(YELLOW "%d %d has taken a fork\n" RESET, i, philo->i_philo + 1);
+			printf(YELLOW "%d %d has taken a fork\n" RESET, i, \
+				philo->i_philo + 1);
 		else if (c == 'e')
 			printf(GREEN "%d %d is eating\n" RESET, i, philo->i_philo + 1);
 		else if (c == 's')

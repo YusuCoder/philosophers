@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/03 12:48:59 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:32:55 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,21 @@ typedef struct s_ryusupov
 
 typedef struct s_fork_info
 {
+	t_ryusupov			*philo;
 	int					left_index;
 	int					right_index;
 	int					*left_fork;
 	int					*right_fork;
+	int					i;
 }						t_fork_info;
+
+typedef struct s_philo_args
+{
+	t_ryusupov			*philo;
+	int					*right_fork;
+	int					*left_fork;
+	int					i;
+}						t_philo_args;
 
 /*--------------Finction definitions------------*/
 int						valid_input(int argc, char **argv);
@@ -97,5 +107,4 @@ void					data_time(t_ryusupov *data);
 void					set_end(t_ryusupov *philo);
 void					set_fork_available(t_ryusupov *philo,
 							t_fork_info fork_info);
-
 #endif

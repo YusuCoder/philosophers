@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:34:36 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/08 14:40:37 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:34:22 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	init_threads(t_ryusupov *data)
 		pthread_mutex_init(&data->mutexx[i], NULL);
 		if (pthread_create(&philo[i], NULL, routine, philo_data) != 0)
 		{
-			printf("Failed to create thread %d\n", i);
 			free(philo);
 			break ;
 		}

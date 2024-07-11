@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:23:47 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/08 14:05:05 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:12:04 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	philo_take_forks_right_first(t_ryusupov *philo, t_fork_info *fork_info)
 void	setup_fork_info(t_ryusupov *philo, t_fork_info *fork_info)
 {
 	fork_info->right_fork = &philo->data->forks[philo->i_philo];
-	fork_info->left_fork = &philo->data->forks[get_index(philo, philo->i_philo
-			- 1)];
+	fork_info->left_fork = &philo->data->forks \
+	[get_index(philo, philo->i_philo - 1)];
 	fork_info->left_index = get_index(philo, philo->i_philo - 1);
 	fork_info->right_index = philo->i_philo;
 }
