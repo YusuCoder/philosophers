@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:23:47 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/11 15:12:04 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:14:13 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	set_end(t_ryusupov *philo)
 	put_death(philo);
 }
 
-void	philo_take_forks_left_first(t_ryusupov *philo, t_fork_info *fork_info)
+void	take_forks (t_ryusupov *philo, t_fork_info *fork_info)
 {
 	pthread_mutex_lock(&philo->data->mutexx[fork_info->left_index]);
 	*(fork_info->left_fork) = 0;
@@ -29,18 +29,6 @@ void	philo_take_forks_left_first(t_ryusupov *philo, t_fork_info *fork_info)
 	pthread_mutex_lock(&philo->data->mutexx[fork_info->right_index]);
 	*(fork_info->right_fork) = 0;
 	pthread_mutex_unlock(&philo->data->mutexx[fork_info->right_index]);
-	philo_status(philo, 'f');
-}
-
-void	philo_take_forks_right_first(t_ryusupov *philo, t_fork_info *fork_info)
-{
-	pthread_mutex_lock(&philo->data->mutexx[fork_info->right_index]);
-	*(fork_info->right_fork) = 0;
-	pthread_mutex_unlock(&philo->data->mutexx[fork_info->right_index]);
-	philo_status(philo, 'f');
-	pthread_mutex_lock(&philo->data->mutexx[fork_info->left_index]);
-	*(fork_info->left_fork) = 0;
-	pthread_mutex_unlock(&philo->data->mutexx[fork_info->left_index]);
 	philo_status(philo, 'f');
 }
 

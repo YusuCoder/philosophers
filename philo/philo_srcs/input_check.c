@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:21:58 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/05 13:07:44 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/12 12:37:38 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	valid_input(int argc, char **argv)
 	i = 1;
 	while (i < argc)
 	{
+		if (argv[i][0] == '\0')
+			return (1);
 		if (is_digit(argv[i]))
 			return (1);
 		num = ft_atoi(argv[i]);

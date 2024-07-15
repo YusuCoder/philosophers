@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/11 15:32:55 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:14:37 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_ryusupov
 	struct timeval		begin;
 	pthread_mutex_t		*mutexx;
 	pthread_mutex_t		mutex_st;
-	pthread_mutex_t		fork_mutex;
+	pthread_mutex_t		routine_mutex;
 	pthread_mutex_t		mutex_death;
 	int					i_philo;
 	int					food;
@@ -93,9 +93,7 @@ void					init_threads(t_ryusupov *data);
 void					join_threads(t_ryusupov *data, pthread_t *philo);
 void					put_death(t_ryusupov *philo);
 int						calc_timestamp(struct timeval start);
-void					philo_take_forks_left_first(t_ryusupov *philo,
-							t_fork_info *fork_info);
-void					philo_take_forks_right_first(t_ryusupov *philo,
+void					take_forks(t_ryusupov *philo,
 							t_fork_info *fork_info);
 void					ft_free_c_data(t_ryusupov *c_data);
 void					wait_for_start(t_ryusupov *philo);
@@ -107,4 +105,5 @@ void					data_time(t_ryusupov *data);
 void					set_end(t_ryusupov *philo);
 void					set_fork_available(t_ryusupov *philo,
 							t_fork_info fork_info);
+
 #endif

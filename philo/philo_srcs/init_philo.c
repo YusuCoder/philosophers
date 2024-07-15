@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:34:36 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/11 15:34:22 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:11:04 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	init_values(t_ryusupov *data, int argc, char **argv)
 	if (argc == 6)
 		data->eat_count = ft_atoi(argv[5]);
 	else
-		data->eat_count = -1;
+		data->eat_count = INT_MAX;
 	data->philo_count = ft_atoi(argv[1]);
 	data->death_time = ft_atoi(argv[2]);
 	data->eat_time = ft_atoi(argv[3]);
@@ -76,7 +76,7 @@ void	init_threads(t_ryusupov *data)
 	i = 0;
 	pthread_mutex_init(&data->mutex_st, NULL);
 	pthread_mutex_init(&data->mutex_death, NULL);
-	pthread_mutex_init(&data->fork_mutex, NULL);
+	pthread_mutex_init(&data->routine_mutex, NULL);
 	while (i < data->philo_count)
 	{
 		if (i == data->philo_count - 1)

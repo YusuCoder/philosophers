@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:51:01 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/08 15:30:01 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/12 15:31:51 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,24 @@ void	routine_loop(t_ryusupov *philo)
 {
 	while (1)
 	{
-		pthread_mutex_lock(&philo->data->mutex_st);
+		pthread_mutex_lock(&philo->data->mutex_death);
 		if (philo->data->end == 1)
 		{
-			pthread_mutex_unlock(&philo->data->mutex_st);
+			pthread_mutex_unlock(&philo->data->mutex_death);
 			break ;
 		}
-		pthread_mutex_unlock(&philo->data->mutex_st);
+		pthread_mutex_unlock(&philo->data->mutex_death);
 		philo_death(philo);
-		pthread_mutex_lock(&philo->data->mutex_st);
+		pthread_mutex_lock(&philo->data->mutex_death);
 		if (philo->data->end == 0)
 		{
-			pthread_mutex_unlock(&philo->data->mutex_st);
+			pthread_mutex_unlock(&philo->data->mutex_death);
 			think_eat_sleep(philo, philo->i_philo);
 			usleep(500);
 		}
 		else
 		{
-			pthread_mutex_unlock(&philo->data->mutex_st);
+			pthread_mutex_unlock(&philo->data->mutex_death);
 			break ;
 		}
 	}
