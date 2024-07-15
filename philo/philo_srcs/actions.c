@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:28:09 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/15 15:15:13 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:09:05 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,22 @@ void	philo_eat_and_release(t_ryusupov *philo, t_fork_info *fork_info)
 {
 	gettimeofday(&philo->t_food, NULL);
 	philo->food++;
-	pthread_mutex_lock(&philo->data->mutex_death);
+	pthread_mutex_lock(&philo->data->mutex_st);
 	if (philo->food > philo->data->eat_count)
 	{
+		pthread_mutex_unlock(&philo->data->mutex_st);
+		pthread_mutex_lock(&philo->data->routine_mutex);
 		philo->data->completed_eating++;
+		pthread_mutex_unlock(&philo->data->routine_mutex);
 		if (philo->data->completed_eating == philo->data->philo_count)
+		{
+			pthread_mutex_lock(&philo->data->mutex_death);
 			philo->data->end = 1;
-		pthread_mutex_unlock(&philo->data->mutex_death);
+			pthread_mutex_unlock(&philo->data->mutex_death);
+		}
 	}
 	else
-		pthread_mutex_unlock(&philo->data->mutex_death);
+		pthread_mutex_unlock(&philo->data->mutex_st);
 	philo_status(philo, 'e');
 	philo_sleep(philo, philo->data->eat_time);
 	if (lock_forks(philo, fork_info))
@@ -84,8 +90,13 @@ void	think_eat_sleep(t_ryusupov *philo, int i)
 	t_fork_info	fork_info;
 
 	setup_fork_info(philo, &fork_info);
+	pthread_mutex_lock(&philo->data->mutex_death);
 	if (philo->data->end)
+	{
+		pthread_mutex_unlock(&philo->data->mutex_death);
 		return ;
+	}
+	pthread_mutex_unlock(&philo->data->mutex_death);
 	if (lock_forks(philo, &fork_info))
 		return ;
 	if (*fork_info.left_fork == 1 && *fork_info.right_fork == 1)

@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:25:58 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/12 15:18:04 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:30:46 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,34 @@
 
 void	philo_death(t_ryusupov *philo)
 {
-	pthread_mutex_lock(&philo->data->mutex_st);
+	pthread_mutex_lock(&philo->data->mutex_death);
 	philo->is_locked = 1;
 	if (philo->data->end == 0)
 	{
-		pthread_mutex_unlock(&philo->data->mutex_st);
+		pthread_mutex_unlock(&philo->data->mutex_death);
 		philo->is_locked = 0;
 		if (calc_time(the_time(), philo->t_food) > philo->data->death_time)
 			set_end(philo);
-		pthread_mutex_lock(&philo->data->mutex_st);
-		philo->is_locked = 1;
+		pthread_mutex_lock(&philo->data->routine_mutex);
+		philo->is_locked2 = 1;
 		if (philo->data->completed_eating == philo->data->philo_count)
 		{
-			pthread_mutex_unlock(&philo->data->mutex_st);
-			philo->is_locked = 0;
-			pthread_mutex_lock(&philo->data->mutex_st);
+			pthread_mutex_unlock(&philo->data->routine_mutex);
+			philo->is_locked2 = 0;
+			// set_end(philo);
+			pthread_mutex_lock(&philo->data->mutex_death);
 			philo->data->end = 1;
-			pthread_mutex_unlock(&philo->data->mutex_st);
+			pthread_mutex_unlock(&philo->data->mutex_death);
+		}
+		else
+		{
+			pthread_mutex_unlock(&philo->data->routine_mutex);
+			philo->is_locked2 = 0;
 		}
 	}
-	if (philo->is_locked)
+	else
 	{
-		pthread_mutex_unlock(&philo->data->mutex_st);
+		pthread_mutex_unlock(&philo->data->mutex_death);
 		philo->is_locked = 0;
 	}
 	usleep(1);
@@ -67,8 +73,10 @@ void	philo_status(t_ryusupov *philo, char c)
 
 	pthread_mutex_lock(&philo->data->mutex_st);
 	i = calc_timestamp(philo->data->begin);
+	pthread_mutex_lock(&philo->data->mutex_death);
 	if (philo->data->end == 0)
 	{
+		pthread_mutex_unlock(&philo->data->mutex_death);
 		if (c == 'f')
 			printf(YELLOW "%d %d has taken a fork\n" RESET, i, \
 				philo->i_philo + 1);
@@ -81,7 +89,10 @@ void	philo_status(t_ryusupov *philo, char c)
 		pthread_mutex_unlock(&philo->data->mutex_st);
 	}
 	else
+	{
+		pthread_mutex_unlock(&philo->data->mutex_death);
 		pthread_mutex_unlock(&philo->data->mutex_st);
+	}
 }
 
 void	sleep_dead(t_ryusupov *philo)

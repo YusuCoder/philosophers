@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:51:01 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/12 15:31:51 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:03:28 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ void	routine_loop(t_ryusupov *philo)
 			pthread_mutex_unlock(&philo->data->mutex_death);
 			break ;
 		}
+		usleep(1000);
 	}
 }
