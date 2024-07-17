@@ -6,12 +6,11 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:28:09 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/15 17:09:05 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:40:47 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
 void	philo_sleep(t_ryusupov *philo, int i)
 {
 	struct timeval	time;
