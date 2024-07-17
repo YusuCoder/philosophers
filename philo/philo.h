@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/15 16:06:18 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:03:52 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,11 @@ void					data_time(t_ryusupov *data);
 void					set_end(t_ryusupov *philo);
 void					set_fork_available(t_ryusupov *philo,
 							t_fork_info fork_info);
+void					perform_actions(t_ryusupov *philo,
+							t_fork_info *fork_info, int i);
+int						prepare_to_eat(t_ryusupov *philo,
+							t_fork_info *fork_info);
+void					philo_eat(t_ryusupov *philo, int *right_fork,
+							int *left_fork, int i);
 
 #endif

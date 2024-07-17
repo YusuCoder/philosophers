@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:25:58 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/17 11:04:59 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/17 12:59:55 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,15 @@
 void	philo_death(t_ryusupov *philo)
 {
 	pthread_mutex_lock(&philo->data->mutex_death);
-	philo->is_locked = 1;
 	if (philo->data->end == 0)
 	{
 		pthread_mutex_unlock(&philo->data->mutex_death);
-		philo->is_locked = 0;
 		if (calc_time(the_time(), philo->t_food) > philo->data->death_time)
 			set_end(philo);
 		pthread_mutex_lock(&philo->data->routine_mutex);
-		philo->is_locked2 = 1;
 		if (philo->data->completed_eating == philo->data->philo_count)
 		{
 			pthread_mutex_unlock(&philo->data->routine_mutex);
-			philo->is_locked2 = 0;
 			pthread_mutex_lock(&philo->data->mutex_death);
 			philo->data->end = 1;
 			pthread_mutex_unlock(&philo->data->mutex_death);
@@ -41,7 +37,6 @@ void	philo_death(t_ryusupov *philo)
 	else
 	{
 		pthread_mutex_unlock(&philo->data->mutex_death);
-		philo->is_locked = 0;
 	}
 	usleep(1);
 }

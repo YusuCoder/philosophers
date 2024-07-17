@@ -6,13 +6,13 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:23:47 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/15 18:42:31 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:28:14 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void set_end(t_ryusupov *philo)
+void	set_end(t_ryusupov *philo)
 {
 	pthread_mutex_lock(&philo->data->mutex_death);
 	philo->data->end = 1;
@@ -20,7 +20,7 @@ void set_end(t_ryusupov *philo)
 	put_death(philo);
 }
 
-void take_forks(t_ryusupov *philo, t_fork_info *fork_info)
+void	take_forks(t_ryusupov *philo, t_fork_info *fork_info)
 {
 	pthread_mutex_lock(&philo->data->mutexx[fork_info->left_index]);
 	*(fork_info->left_fork) = 0;
@@ -32,15 +32,16 @@ void take_forks(t_ryusupov *philo, t_fork_info *fork_info)
 	philo_status(philo, 'f');
 }
 
-void setup_fork_info(t_ryusupov *philo, t_fork_info *fork_info)
+void	setup_fork_info(t_ryusupov *philo, t_fork_info *fork_info)
 {
 	fork_info->right_fork = &philo->data->forks[philo->i_philo];
-	fork_info->left_fork = &philo->data->forks[get_index(philo, philo->i_philo - 1)];
+	fork_info->left_fork = &philo->data->forks \
+	[get_index(philo, philo->i_philo - 1)];
 	fork_info->left_index = get_index(philo, philo->i_philo - 1);
 	fork_info->right_index = philo->i_philo;
 }
 
-int lock_forks(t_ryusupov *philo, t_fork_info *fork_info)
+int	lock_forks(t_ryusupov *philo, t_fork_info *fork_info)
 {
 	if (fork_info->left_index < fork_info->right_index)
 	{
