@@ -6,14 +6,17 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:25:58 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/17 13:30:59 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:36:08 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	philo_death(t_ryusupov *philo)
+void *philo_death(void *data)
 {
+	t_ryusupov *philo;
+
+	philo = (t_ryusupov *)data;
 	pthread_mutex_lock(&philo->data->mutex_death);
 	if (philo->data->end == 0)
 	{
@@ -38,7 +41,7 @@ void	philo_death(t_ryusupov *philo)
 	{
 		pthread_mutex_unlock(&philo->data->mutex_death);
 	}
-	usleep(1);
+	return NULL;
 }
 
 void	join_threads(t_ryusupov *data, pthread_t *philo)

@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:34:36 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/15 18:44:43 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:32:33 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,31 +66,72 @@ void	init_philo(t_ryusupov *philo, t_ryusupov *data, int i)
 	philo->data = data;
 }
 
+// void	init_mutex(t_ryusupov *data)
+// {
+// 	pthread_mutex_init(&data->mutex_st, NULL);
+// 	pthread_mutex_init(&data->mutex_death, NULL);
+// 	pthread_mutex_init(&data->routine_mutex, NULL);
+// }
+
 void	init_threads(t_ryusupov *data)
 {
-	pthread_t	*philo;
 	int			i;
 	t_ryusupov	*philo_data;
 
-	philo = malloc(sizeof(pthread_t) * data->philo_count);
-	i = 0;
+	i = -1;
+	data->philos = malloc(sizeof(pthread_t) * data->philo_count);
+	// init_mutex(data);
 	pthread_mutex_init(&data->mutex_st, NULL);
 	pthread_mutex_init(&data->mutex_death, NULL);
 	pthread_mutex_init(&data->routine_mutex, NULL);
-	while (i < data->philo_count)
+	while (++i < data->philo_count)
 	{
 		if (i == data->philo_count - 1)
 			data_time(data);
 		philo_data = malloc(sizeof(t_ryusupov));
 		init_philo(philo_data, data, i);
 		pthread_mutex_init(&data->mutexx[i], NULL);
-		if (pthread_create(&philo[i], NULL, routine, philo_data) != 0)
+		if (pthread_create(&data->philos[i], NULL, routine, philo_data) != 0)
 		{
-			free(philo);
+			free(data->philos);
 			break ;
 		}
-		i++;
 		usleep(500);
 	}
-	join_threads(data, philo);
+	if (pthread_create(&data->monitor_thread, NULL, philo_death, data) != 0)
+	{
+		free(data->philos);
+		return ;
+	}
+	pthread_join(data->monitor_thread, NULL);
+	join_threads(data, data->philos);
 }
+
+// void	init_threads(t_ryusupov *data)
+// {
+// 	pthread_t	*philo;
+// 	int			i;
+// 	t_ryusupov	*philo_data;
+
+// 	philo = malloc(sizeof(pthread_t) * data->philo_count);
+// 	i = 0;
+// 	pthread_mutex_init(&data->mutex_st, NULL);
+// 	pthread_mutex_init(&data->mutex_death, NULL);
+// 	pthread_mutex_init(&data->routine_mutex, NULL);
+// 	while (i < data->philo_count)
+// 	{
+// 		if (i == data->philo_count - 1)
+// 			data_time(data);
+// 		philo_data = malloc(sizeof(t_ryusupov));
+// 		init_philo(philo_data, data, i);
+// 		pthread_mutex_init(&data->mutexx[i], NULL);
+// 		if (pthread_create(&philo[i], NULL, routine, philo_data) != 0)
+// 		{
+// 			free(philo);
+// 			break ;
+// 		}
+// 		i++;
+// 		usleep(500);
+// 	}
+// 	join_threads(data, philo);
+// }

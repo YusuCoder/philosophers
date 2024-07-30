@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/17 13:03:52 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:00:25 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,15 @@
 # include <sys/time.h>
 # include <unistd.h>
 /*---------Structs---------*/
+typedef struct s_ryusupov	t_ryusupov;
+typedef struct s_philo_args
+{
+	t_ryusupov			*philo;
+	int					died;
+	int					*right_fork;
+	int					*left_fork;
+	int					i;
+}						t_philo_args;
 typedef struct s_ryusupov
 {
 	int					i;
@@ -40,6 +49,9 @@ typedef struct s_ryusupov
 	int					philo_count;
 	int					completed_eating;
 	int					end;
+	t_philo_args		*philo;
+	pthread_t			*philos;
+	pthread_t			monitor_thread;
 	struct timeval		t_food;
 	struct timeval		now;
 	struct timeval		begin;
@@ -66,14 +78,6 @@ typedef struct s_fork_info
 	int					i;
 }						t_fork_info;
 
-typedef struct s_philo_args
-{
-	t_ryusupov			*philo;
-	int					*right_fork;
-	int					*left_fork;
-	int					i;
-}						t_philo_args;
-
 /*--------------Finction definitions------------*/
 int						valid_input(int argc, char **argv);
 void					init_values(t_ryusupov *data, int argc, char **argv);
@@ -85,7 +89,7 @@ int						get_index(t_ryusupov *philo, int i);
 struct timeval			the_time(void);
 /*--------------Actions----------------*/
 void					*routine(void *argv);
-void					philo_death(t_ryusupov *philo);
+void					*philo_death(void *data);
 void					think_eat_sleep(t_ryusupov *philo, int i);
 void					philo_status(t_ryusupov *philo, char c);
 int						calc_time(struct timeval now, struct timeval start);
