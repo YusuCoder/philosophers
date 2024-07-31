@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:28:09 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/31 17:33:29 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/31 19:07:31 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	philo_sleep(t_ryusupov *philo, int i)
 		if (calc_time(now, philo->data->begin) >= res)
 			break ;
 		philo_death(philo);
-		usleep(300);
+		usleep(10);
 	}
 }
 
@@ -60,7 +60,7 @@ void	perform_actions(t_ryusupov *philo, t_fork_info *fork_info, int i)
 		philo_status(philo, 's');
 		philo_sleep(philo, philo->data->sleep_time);
 		philo_status(philo, 't');
-		usleep(500);
+		usleep(1000);
 	}
 	else
 	{

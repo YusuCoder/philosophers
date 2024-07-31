@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:25:58 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/31 17:30:35 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/31 19:18:28 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	*philo_death(void *data)
 	}
 	else
 		pthread_mutex_unlock(&philo->data->mutex_death);
-	usleep(1000);
+	usleep(500);
 	return (NULL);
 }
 
@@ -90,7 +90,7 @@ void	philo_status(t_ryusupov *philo, char c)
 
 void	sleep_dead(t_ryusupov *philo)
 {
-	put_death(philo);
+	philo_sleep(philo, philo->data->death_time);
 	free(philo);
 }
 
@@ -103,7 +103,7 @@ void	*routine(void *argv)
 	gettimeofday(&philo->t_food, NULL);
 	if ((philo->i_philo + 1) % 2 != 0)
 	{
-		usleep(1000);
+		usleep(500);
 		philo_status(philo, 't');
 	}
 	pthread_mutex_lock(&philo->data->routine_mutex);
