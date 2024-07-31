@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:28:22 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/31 15:57:54 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/31 17:28:05 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	main(int argc, char **argv)
 	if (!valid_input(argc, argv))
 	{
 		init_values(&data, argc, argv);
+		if (data.eat_count < 1)
+			return (0);
 		init_threads(&data);
 	}
 	else
