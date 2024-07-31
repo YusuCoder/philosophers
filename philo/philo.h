@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/31 13:34:18 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/31 13:53:50 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,6 @@ void					philo_eat(t_ryusupov *philo, int *right_fork,
 void					init_philo(t_ryusupov *philo, t_ryusupov *data, int i);
 void					init_mutex(t_ryusupov *data);
 void					count_check(t_ryusupov *data, int i);
+pthread_mutex_t			*ft_mutexx(int philo_c);
 
 #endif

@@ -6,11 +6,21 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 13:30:52 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/31 13:31:14 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/31 13:53:37 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
+pthread_mutex_t	*ft_mutexx(int philo_c)
+{
+	pthread_mutex_t	*res;
+
+	res = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * philo_c);
+	if (!res)
+		return (0);
+	return (res);
+}
 
 void	init_philo(t_ryusupov *philo, t_ryusupov *data, int i)
 {
