@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:21:58 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/31 13:38:30 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/31 16:03:51 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,13 @@ void	put_death(t_ryusupov *philo)
 
 	pthread_mutex_lock(&philo->data->mutex_st);
 	timestamp = calc_timestamp(philo->data->begin);
-	printf(RED "%d %d died\n" RESET, timestamp, philo->i_philo + 1);
+	if (philo->is_locked == 0)
+	{
+		printf(RED "%d %d died\n" RESET, timestamp, philo->i_philo + 1);
+		philo->is_locked = 1;
+	}
 	pthread_mutex_unlock(&philo->data->mutex_st);
+	usleep(1000);
 }
 
 int	valid_input(int argc, char **argv)
