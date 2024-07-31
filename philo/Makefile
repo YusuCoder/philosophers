@@ -6,7 +6,7 @@
 #    By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/12 18:08:30 by ryusupov          #+#    #+#              #
-#    Updated: 2024/07/17 12:58:12 by ryusupov         ###   ########.fr        #
+#    Updated: 2024/07/31 13:32:29 by ryusupov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ PHILO_SRCS	:= philo_srcs/init_philo.c \
 			   philo_srcs/input_check_utils.c \
 			   philo_srcs/action_utils.c \
 			   philo_srcs/philo_th_utils.c \
-			   philo_srcs/philo_eat.c
+			   philo_srcs/philo_eat.c \
+			   philo_srcs/init_philo_utils.c
 #####################################################
 #					OBJECT FILES					#
 #####################################################

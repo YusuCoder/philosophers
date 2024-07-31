@@ -6,22 +6,22 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:25:58 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/30 19:36:08 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/31 13:41:29 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void *philo_death(void *data)
+void	*philo_death(void *data)
 {
-	t_ryusupov *philo;
+	t_ryusupov	*philo;
 
 	philo = (t_ryusupov *)data;
 	pthread_mutex_lock(&philo->data->mutex_death);
 	if (philo->data->end == 0)
 	{
 		pthread_mutex_unlock(&philo->data->mutex_death);
-		if (calc_time(the_time(), philo->t_food) > philo->data->death_time)
+		if (calc_time(the_time(), philo->t_food) >= philo->data->death_time)
 			set_end(philo);
 		pthread_mutex_lock(&philo->data->routine_mutex);
 		if (philo->data->completed_eating == philo->data->philo_count)
@@ -32,16 +32,12 @@ void *philo_death(void *data)
 			pthread_mutex_unlock(&philo->data->mutex_death);
 		}
 		else
-		{
 			pthread_mutex_unlock(&philo->data->routine_mutex);
-			philo->is_locked2 = 0;
-		}
 	}
 	else
-	{
 		pthread_mutex_unlock(&philo->data->mutex_death);
-	}
-	return NULL;
+	usleep(100);
+	return (NULL);
 }
 
 void	join_threads(t_ryusupov *data, pthread_t *philo)
@@ -94,9 +90,6 @@ void	philo_status(t_ryusupov *philo, char c)
 
 void	sleep_dead(t_ryusupov *philo)
 {
-	pthread_mutex_lock(&philo->data->mutex_death);
-	philo_sleep(philo, philo->data->death_time);
-	pthread_mutex_unlock(&philo->data->mutex_death);
 	put_death(philo);
 	free(philo);
 }

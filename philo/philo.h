@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/30 19:00:25 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/07/31 13:34:18 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_ryusupov
 	int					end;
 	t_philo_args		*philo;
 	pthread_t			*philos;
-	pthread_t			monitor_thread;
+	pthread_t			m_thread;
 	struct timeval		t_food;
 	struct timeval		now;
 	struct timeval		begin;
@@ -116,5 +116,8 @@ int						prepare_to_eat(t_ryusupov *philo,
 							t_fork_info *fork_info);
 void					philo_eat(t_ryusupov *philo, int *right_fork,
 							int *left_fork, int i);
+void					init_philo(t_ryusupov *philo, t_ryusupov *data, int i);
+void					init_mutex(t_ryusupov *data);
+void					count_check(t_ryusupov *data, int i);
 
 #endif
