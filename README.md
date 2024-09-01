@@ -1,4 +1,4 @@
-# Philosophers dining problem
+# Philosophers dining problem :white_check_mark:
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/YusuCoder/Philosophers)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/YusuCoder/Philosophers)
@@ -14,7 +14,7 @@
 > [!NOTE]
 > Each philospher should be a thread and number of forks are equal to number of philosphers ex: if there are 5 philos there will be 5 forks, but each philo can eat only with two forks.
 
-# General description
+# :pushpin: General description
 ### The subject describes the problem as follows:
 - One or more philosophers sit at a round table.
 - There is a large bowl of spaghetti in the middle of the table.
@@ -42,11 +42,11 @@
   [timestamp_in_ms] [x] died
 ```
 
-# Threads and Mutexes
+# :balance_scale: Threads and Mutexes
 > Each philospher is a thread and each fork is protected by a mutex. There is exactly one fork between each philosphers and a philospher must take the fork to his immediate left and right in order to eat.
 
 
-# Usage
+# :hammer_and_pick: Usage
 
 1. Clone the project
 ```
