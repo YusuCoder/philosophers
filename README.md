@@ -1,7 +1,7 @@
 # Philosophers dining problem
 ![Philosophers](https://github.com/YusuCoder/philosophers/blob/master/test_pics/philo.png)
 
-> Philosophers is a 42 school project designed around Edsger Dijkstra's famous dining philosophers problem. For this project, we must learn about concurrent programming. For projects mandatory part we must find the solution to the problem using only thrads and mutexes.
+> Philosophers is a 42 school project designed around Edsger Dijkstra's famous dining philosophers problem. For this project, we must learn about concurrent programming. For projects mandatory part we must find the solution to the problem using only threads and mutexes.
 
 > [!NOTE]
 > Each philospher should be a thread and number of forks are equal to number of philosphers ex: if there are 5 philos there will be 5 forks, but each philo can eat only with two forks.
