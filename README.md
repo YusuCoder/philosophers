@@ -1,5 +1,13 @@
 # Philosophers dining problem
+
+![GitHub repo size](https://img.shields.io/github/repo-size/YusuCoder/Philosophers)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/YusuCoder/Philosophers)
+![GitHub language count](https://img.shields.io/github/languages/count/YusuCoder/Philosophers)
+![GitHub last commit](https://img.shields.io/github/last-commit/YusuCoder/Philosophers)
+![GitHub top language](https://img.shields.io/github/languages/top/YusuCoder/philosophers)
 ![Philosophers](https://github.com/YusuCoder/philosophers/blob/master/test_pics/philo.png)
+
+
 
 > Philosophers is a 42 school project designed around Edsger Dijkstra's famous dining philosophers problem. For this project, we must learn about concurrent programming. For projects mandatory part we must find the solution to the problem using only threads and mutexes.
 
