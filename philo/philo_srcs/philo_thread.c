@@ -6,7 +6,7 @@
 /*   By: ryusupov <ryusupov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:25:58 by ryusupov          #+#    #+#             */
-/*   Updated: 2024/07/31 19:18:28 by ryusupov         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:28:19 by ryusupov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,14 @@ void	*philo_death(void *data)
 	if (philo->data->end == 0)
 	{
 		pthread_mutex_unlock(&philo->data->mutex_death);
+		pthread_mutex_lock(&philo->data->mutex_st);
 		if (calc_time(the_time(), philo->t_food) >= philo->data->death_time)
+		{
+			pthread_mutex_unlock(&philo->data->mutex_st);
 			set_end(philo);
+		}
+		else
+			pthread_mutex_unlock(&philo->data->mutex_st);
 		pthread_mutex_lock(&philo->data->routine_mutex);
 		if (philo->data->completed_eating == philo->data->philo_count)
 		{
@@ -100,7 +106,9 @@ void	*routine(void *argv)
 
 	philo = argv;
 	wait_for_start(philo);
+	pthread_mutex_lock(&philo->data->mutex_st);
 	gettimeofday(&philo->t_food, NULL);
+	pthread_mutex_unlock(&philo->data->mutex_st);
 	if ((philo->i_philo + 1) % 2 != 0)
 	{
 		usleep(500);
